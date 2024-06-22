@@ -17,8 +17,6 @@ export const db = async (): Promise<void> => {
 
     connection.isConnected = connectionCurrent.connections[0].readyState;
 
-    console.log(connectionCurrent);
-
     console.log("DB is connected!");
   } catch (error) {
     console.log("error connecting to db: ", error);
