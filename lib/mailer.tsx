@@ -13,14 +13,27 @@ export async function sendMail({
   verificationCode: string;
 }): Promise<ApiResponse> {
   try {
-    const transport = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 2525,
-      auth: {
-        user: process.env.MAILTRAP_USER,
-        pass: process.env.MAILTRAP_PASS,
-      },
-    });
+    let transport;
+    {
+      process.env.NODE_ENV === "development"
+        ? (transport = nodemailer.createTransport({
+            host: "sandbox.smtp.mailtrap.io",
+            port: 2525,
+            auth: {
+              user: process.env.MAILTRAP_USER,
+              pass: process.env.MAILTRAP_PASS,
+            },
+          }))
+        : (transport = nodemailer.createTransport({
+            service: "Gmail",
+            host: "smtp.gmail.com",
+            port: 2525,
+            auth: {
+              user: process.env.GMAIL_USER,
+              pass: process.env.GMAIL_PASS,
+            },
+          }));
+    }
 
     // TODO UPDATE VALUES
     const mailOptions = {
