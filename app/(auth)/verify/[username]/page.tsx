@@ -16,13 +16,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
 
@@ -32,9 +30,6 @@ const VerifyUsernamePage = ({ params }: { params: { username: string } }) => {
 
   const form = useForm<z.infer<typeof verifySchema>>({
     resolver: zodResolver(verifySchema),
-    // defaultValues: {
-    //   code: "",
-    // },
   });
 
   const onSubmit = async (data: z.infer<typeof verifySchema>) => {
