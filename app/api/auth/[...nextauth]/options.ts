@@ -1,20 +1,19 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-// import Google from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 import { compare } from "bcryptjs";
 import User from "@/models/User";
 
-export const authOptions: NextAuthOptions = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
-    Credentials({
+    CredentialsProvider({
       id: "credentials",
       name: "Credentials",
       credentials: {
-        email: {
-          label: "Email",
-          type: "email",
-          placeholder: "shubham@gmail.com",
+        identifier: {
+          label: "Identifier",
+          placeholder: "shubhamxd",
+          type: "text",
         },
         password: {
           label: "Password",
@@ -64,15 +63,17 @@ export const authOptions: NextAuthOptions = NextAuth({
   session: {
     strategy: "jwt",
   },
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   // DISABLE WHEN DEPLOYING
-  debug: true,
+  // debug: true,
   callbacks: {
     async jwt({ token, user }) {
-      token._id = user._id?.toString();
-      token.isVerified = user.isVerified;
-      token.isAllowingNewMessages = user.isAllowingNewMessages;
-      token.username = user.username;
+      if (user) {
+        token._id = user._id?.toString();
+        token.isVerified = user.isVerified;
+        token.isAllowingNewMessages = user.isAllowingNewMessages;
+        token.username = user.username;
+      }
 
       return token;
     },
@@ -87,4 +88,4 @@ export const authOptions: NextAuthOptions = NextAuth({
       return session;
     },
   },
-});
+};
