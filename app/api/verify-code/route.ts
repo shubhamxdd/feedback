@@ -2,7 +2,6 @@ import { db } from "@/lib/db";
 import { verifySchema } from "@/models/schema/verifySchema";
 import User from "@/models/User";
 import { NextResponse } from "next/server";
-import { z } from "zod";
 
 export async function POST(req: Request) {
   await db();
