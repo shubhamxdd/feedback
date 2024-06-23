@@ -24,7 +24,7 @@ import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 const SignIn = () => {
-  // const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { toast } = useToast();
 
@@ -41,7 +41,7 @@ const SignIn = () => {
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
     // console.log(data);
 
-    // setIsSubmitting(true);
+    setIsSubmitting(true);
 
     const res = await signIn("credentials", {
       redirect: false,
@@ -58,13 +58,15 @@ const SignIn = () => {
         description: "Invalid credentials",
         variant: "destructive",
       });
-      // setIsSubmitting(false);
+      setIsSubmitting(false);
     }
 
     if (res?.url) {
       router.push("/dashboard");
       router.refresh();
+      setIsSubmitting(false);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -104,19 +106,15 @@ const SignIn = () => {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              // disabled={isSubmitting}
-            >
-              Login
-              {/* {isSubmitting ? (
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   <span>Logging in</span>
                 </>
               ) : (
                 "Login"
-              )} */}
+              )}
             </Button>
           </form>
         </Form>
