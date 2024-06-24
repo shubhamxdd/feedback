@@ -12,9 +12,11 @@ const AiResponse = () => {
   return (
     <div>
       <Button
-        className="mt-2"
+        variant={"secondary"}
+        className="mt-6"
         onClick={async () => {
           const { output } = await generate();
+          setGeneration("");
 
           for await (const delta of readStreamableValue(output)) {
             setGeneration(
@@ -23,12 +25,14 @@ const AiResponse = () => {
           }
         }}
       >
-        Ask gemini
+        Generate Messages with Gemini
       </Button>
       {generation && (
-        <div>
+        <div className="p-2 border border-zinc-300 my-2 mx-2 flex flex-col gap-3 rounded-md">
           {generation.split("||").map((item, index) => (
-            <p key={index}>{item}</p>
+            <Button variant={"outline"} key={index}>
+              {item}
+            </Button>
           ))}
         </div>
       )}
