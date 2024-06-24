@@ -1,9 +1,6 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/options";
 import { db } from "@/lib/db";
 import UserModel from "@/models/User";
 import { NextResponse } from "next/server";
-import { User } from "next-auth";
 import { MessageType } from "@/models/Message";
 
 export async function POST(req: Request) {
