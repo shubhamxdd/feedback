@@ -16,11 +16,3 @@ export const MessageSchema: Schema<MessageType> = new Schema({
     default: Date.now,
   },
 });
-
-
-
-const Message =
-  (mongoose.models.Message as mongoose.Model<MessageType>) ||
-  mongoose.model<MessageType>("Message", MessageSchema);
-
-export default Message
