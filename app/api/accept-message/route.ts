@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   const { allowingMessages } = await req.json();
 
   try {
-    const updatedUser = UserModel.findByIdAndUpdate(
+    const updatedUser = await UserModel.findByIdAndUpdate(
       userId,
       {
         isAllowingNewMessages: allowingMessages,

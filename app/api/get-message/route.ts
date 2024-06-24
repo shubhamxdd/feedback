@@ -25,13 +25,17 @@ export async function GET(req: Request) {
 
   const userId = new mongoose.Types.ObjectId(user._id);
 
+  // console.log(userId)
+
   try {
     const existingUser = await UserModel.aggregate([
-      { $match: { id: userId } },
-      { $unwind: "$messages" },
-      { $sort: { "messages.createdAt": -1 } },
-      { $group: { _id: "$_id", messages: { $push: "$messages" } } },
-    ]);
+      { $match: { _id: userId } },
+      { $unwind: "$message" },
+      { $sort: { "message.createdAt": -1 } },
+      { $group: { _id: "$_id", messages: { $push: "$message" } } },
+    ]).exec();
+
+    // console.log(existingUser)
 
     if (!existingUser || existingUser.length === 0) {
       return NextResponse.json(
