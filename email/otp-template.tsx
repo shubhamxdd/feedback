@@ -57,7 +57,7 @@ export default function VerificationEmail({
         <Row>
           <Tailwind>
             <Button
-              href={`http://localhost:3000/verify/${username}`}
+              href={`https://feedback-seven-lovat.vercel.app/verify/${username}`}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
               Verify here
